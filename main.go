@@ -15,12 +15,13 @@ var (
 		"schema", "PostgreSQL schema name").Default("public").Short('s').String()
 	outFile    = kingpin.Flag("output", "output file path").Short('o').String()
 	targetTbls = kingpin.Flag("table", "target tales").Short('t').Strings()
+	driver = kingpin.Flag("driver", "type for database driver (postgres, mysql)").Default("postgres").Short('d').String()
 )
 
 func main() {
 	kingpin.Parse()
 
-	db, err := OpenDB(*connStr)
+	db, err := OpenDB(*driver, *connStr)
 	if err != nil {
 		log.Fatal(err)
 	}

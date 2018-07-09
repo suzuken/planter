@@ -8,7 +8,7 @@ import (
 	"sort"
 	"strings"
 
-	_ "github.com/lib/pq" // postgres
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/pkg/errors"
 )
 
@@ -20,8 +20,8 @@ type Queryer interface {
 }
 
 // OpenDB opens database connection
-func OpenDB(connStr string) (*sql.DB, error) {
-	conn, err := sql.Open("postgres", connStr)
+func OpenDB(driver, connStr string) (*sql.DB, error) {
+	conn, err := sql.Open(driver, connStr)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to connect to database")
 	}
